@@ -27,7 +27,7 @@
                             "inputs": {
                                 "parameters": {
                                     "blobName": "@triggerOutputs()?['body']?['name']",
-                                    "containerName": "demo"
+                                    "containerName": "demo1"
                                 },
                                 "serviceProviderConfiguration": {
                                     "connectionName": "AzureBlob",
