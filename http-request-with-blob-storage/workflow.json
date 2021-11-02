@@ -1,0 +1,49 @@
+{
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "actions": {
+      "Response": {
+        "inputs": {
+          "body": "Hello@{triggerOutputs()['relativePathParameters']['name']}",
+          "statusCode": 200
+        },
+        "kind": "http",
+        "runAfter": {
+          "Uploads_a_Blob_to_Azure_Storage": [
+            "Succeeded"
+          ]
+        },
+        "type": "Response"
+      },
+      "Uploads_a_Blob_to_Azure_Storage": {
+        "inputs": {
+          "parameters": {
+            "blobName": "@{triggerOutputs()['relativePathParameters']['name']}.txt",
+            "containerName": "create",
+            "content": "Hello  @{triggerOutputs()['relativePathParameters']['name']}"
+          },
+          "serviceProviderConfiguration": {
+            "connectionName": "AzureBlob",
+            "operationId": "uploadBlob",
+            "serviceProviderId": "/serviceProviders/AzureBlob"
+          }
+        },
+        "runAfter": {},
+        "type": "ServiceProvider"
+      }
+    },
+    "contentVersion": "1.0.0.0",
+    "outputs": {},
+    "triggers": {
+      "manual": {
+        "inputs": {
+          "method": "GET",
+          "relativePath": "/{name}"
+        },
+        "kind": "Http",
+        "type": "Request"
+      }
+    }
+  },
+  "kind": "Stateful"
+}
